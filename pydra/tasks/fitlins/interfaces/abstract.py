@@ -66,7 +66,6 @@ designmtx_output_spec = SpecInfo(
     bases=(BaseSpec,),
 )
 
-    
 
 class DesignMatrixInterface(FunctionSpec):
     input_spec = DesignMatrixInputSpec
@@ -115,8 +114,8 @@ firstlevel_estimator_input_fields = [
         "smoothing_type",
         str, #trait.api.Enum('iso', 'isoblurto')
         {
-            "allowed_values": ["iso", "isoblurto"]
-            "help_string": "Type of smoothing (iso or isoblurto)'"
+            "allowed_values": ["iso", "isoblurto"],
+            "help_string": "Type of smoothing (iso or isoblurto)'",
         }
         
     )
@@ -244,8 +243,8 @@ secondlevel_estimator_input_fields = [
         "smoothing_type",
         str, # trait.api.Enum('iso', 'isoblurto')
         {
-            "allowed_values": ["iso", "isoblurto"]
-            "help_string": "Type of smoothing (iso or isoblurto)'"
+            "allowed_values": ["iso", "isoblurto"],
+            "help_string": "Type of smoothing (iso or isoblurto)'",
         }
         
     )
