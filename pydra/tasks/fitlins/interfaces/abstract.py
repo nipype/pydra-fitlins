@@ -1,0 +1,282 @@
+"""Abstract interfaces for design matrix creation and estimation
+Estimator tools should be subclassed from these interfaces, ensuring
+trivial swapping of one tool for another at single points. For example,
+if there is interest in comparing the design matrix construction between
+tools without changing estimators, a new ``DesignMatrixInterface``
+subclass can be written and swapped in without demanding that an estimator
+also be written.
+"""
+
+from pydra.engine.specs import File, SpecInfo, BaseSpec, FunctionSpec
+import attr
+import typing as ty
+
+designmtx_input_fields = [
+    (
+        "bold_file",
+        File,
+        {
+            "help_string": "bold file",
+            "mandatory": True,
+        },
+    ),
+    (
+        "design_info",
+        ty.Any,
+        {
+            "help_string": "design info",
+        },
+    ),
+    (
+        "drop_missing",
+        bool,
+        {
+            "help_string": "Drop columns in design matrix with all missing values"
+        },
+    ),
+    (
+        "drift_model",
+        ty.Any,
+        {
+            "help_string": "Optional drift model to apply to design matrix"
+        }
+    )
+]
+
+designmtx_input_spec = SpecInfo(
+    name="DesignMatrixInputSpec",
+    fields=designmtx_input_fields,
+    bases=(BaseSpec,),
+)
+
+
+designmtx_output_fields = [
+    (
+        "design_matrix",
+        File,
+        {
+            "help_string": "design matrix",
+        },
+    )
+]
+
+designmtx_output_spec = SpecInfo(
+    name="DesignMatrixOutputSpec",
+    fields=designmtx_output_fields,
+    bases=(BaseSpec,),
+)
+
+    
+
+class DesignMatrixInterface(FunctionSpec):
+    input_spec = DesignMatrixInputSpec
+    output_spec = DesignMatrixOutputSpec
+    
+    
+firstlevel_estimator_input_fields = [
+    (
+        "bold_file",
+        File,
+        {
+            "help_string": "bold file",
+            "mandatory": True,
+        },
+    ),
+    (
+        "mask_file",
+        File,
+        {
+            "help_string": "mask file",
+        },
+    ),
+    (
+        "design_matrix",
+        File,
+        {
+            "help_string": "design matrix",
+            "mandatory": True
+        },
+    ),
+    (
+        "spec",
+        dict,
+        {
+            "help_string": "spec",
+        },
+    ),
+    (
+        "smoothing_fwhm",
+        float,
+        {
+            "help_string": "Full-width half max (FWHM) in mm for smoothing in mask",
+        },
+    ),
+    (
+        "smoothing_type",
+        str,
+        {
+            "allowed_values": ["iso", "isoblurto"]
+            "help_string": "Type of smoothing (iso or isoblurto)'"
+        }
+        
+    )
+]
+
+
+firstlevel_estimator_input_spec = SpecInfo(
+    name="FirstLevelEstimatorInputSpec",
+    fields=firstlevel_estimator_input_fields,
+    bases=(BaseSpec,),
+)
+
+    
+estimator_output_spec = [
+    (
+        "effect_maps",
+        list, # List(File)
+        {
+            "help_string": "effect maps",
+        },
+    ),
+    (
+        "variance_maps",
+        list, #List(File)
+        {
+            "help_string": "variance maps",
+        },
+    ),
+    (
+        "stat_maps",
+        list, #List(File)
+        {
+            "help_string": "stat maps",
+        },
+    ),
+    (
+        "zscore_maps",
+        list, #List(File)
+        {
+            "help_string": "zscore maps",
+        },
+    ),
+    (
+        "pvalue_maps",
+        list, #List(File)
+        {
+            "help_string": "pvalue maps",
+        },
+    ),
+    (
+        "contrast_metadata",
+        list, #List(Dict)
+        {
+            "help_string": "contrast metadata",
+        },
+    ),
+    (
+        "model_maps",
+        list, #List(File)
+        {
+            "help_string": "model maps",
+        },
+    ),
+    (
+        "model_metadata",
+        list, #List(Dict)
+        {
+            "help_string": "model metadata",
+        },
+    ),
+]
+
+estimator_output_spec = SpecInfo(
+    name="EstimatorOutputSpec",
+    fields=estimator_output_spec,
+    bases=(BaseSpec,),
+)
+
+
+    
+class FirstLevelEstimatorInterface(FunctionSpec):
+    input_spec = FirstLevelEstimatorInputSpec
+    output_spec = EstimatorOutputSpec
+
+
+secondlevel_estimator_input_fields = [
+    (
+        "effect_maps",
+        list, #List(File)
+        {
+            "help_string": "effect maps",
+            "mandatory": True,
+        },
+    ),
+    (
+        "variance_maps",
+        list, #List(File)
+        {
+            "help_string": "variance maps",
+        },
+    ),
+    (
+        "stat_metadata",
+        list, #List(List(Dict))
+        {
+            "help_string": "stat metadata",
+            "mandatory": True
+        },
+    ),
+    (
+        "spec",
+        dict
+        {
+            "help_string": "spec",
+        },
+    ),
+    (
+        "smoothing_fwhm",
+        float,
+        {
+            "help_string": "Full-width half max (FWHM) in mm for smoothing in mask",
+        },
+    ),
+    (
+        "smoothing_type",
+        str,
+        {
+            "allowed_values": ["iso", "isoblurto"]
+            "help_string": "Type of smoothing (iso or isoblurto)'"
+        }
+        
+    )
+]
+    
+secondlevel_estimator_input_spec = SpecInfo(
+    name="SecondLevelEstimatorInputSpec",
+    fields=secondlevel_estimator_input_fields,
+    bases=(BaseSpec,),
+)
+
+
+
+secondlevel_estimator_output_fields = [
+    (
+        "contrast_metadata",
+        list, #List(Dict)
+        {
+            "help_string": "contrast metadata"
+        }
+    )
+]
+    
+secondlevel_estimator_output_spec = SpecInfo(
+    name="SecondLevelEstimatoroutputSpec",
+    fields=secondlevel_estimator_output_fields,
+    bases=(BaseSpec,),
+)
+
+
+
+class SecondLevelEstimatorInterface(FunctionSpec):
+    input_spec = SecondLevelEstimatorInputSpec
+    output_spec = SecondLevelEstimatorOutputSpec
