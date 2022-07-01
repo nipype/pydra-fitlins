@@ -7,8 +7,8 @@ subclass can be written and swapped in without demanding that an estimator
 also be written.
 """
 
-from pydra.engine.specs import File, SpecInfo, BaseSpec, FunctionSpec
-import attr
+from pydra.engine.specs import File, SpecInfo, BaseSpec
+from pydra.engine.task import FunctionTask
 import typing as ty
 
 designmtx_input_fields = [
@@ -67,7 +67,7 @@ designmtx_output_spec = SpecInfo(
 )
 
 
-class DesignMatrixInterface(FunctionSpec):
+class DesignMatrixInterface(FunctionTask):
     input_spec = designmtx_input_spec
     output_spec = designmtx_output_spec
     
@@ -196,7 +196,7 @@ estimator_output_spec = SpecInfo(
 
 
     
-class FirstLevelEstimatorInterface(FunctionSpec):
+class FirstLevelEstimatorInterface(FunctionTask):
     input_spec = firstlevel_estimator_input_spec
     output_spec = estimator_output_spec
 
@@ -276,6 +276,6 @@ secondlevel_estimator_output_spec = SpecInfo(
 
 
 
-class SecondLevelEstimatorInterface(FunctionSpec):
+class SecondLevelEstimatorInterface(FunctionTask):
     input_spec = secondlevel_estimator_input_spec
     output_spec = secondlevel_estimator_output_spec
