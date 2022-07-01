@@ -22,7 +22,7 @@ designmtx_input_fields = [
     ),
     (
         "design_info",
-        ty.Any,
+        dict, #trait.api.Dict()
         {
             "help_string": "design info",
         },
@@ -36,7 +36,7 @@ designmtx_input_fields = [
     ),
     (
         "drift_model",
-        ty.Any,
+        str, #trait.api.Either(trait.api.String(), None)
         {
             "help_string": "Optional drift model to apply to design matrix"
         }
@@ -99,7 +99,7 @@ firstlevel_estimator_input_fields = [
     ),
     (
         "spec",
-        dict,
+        dict, #trait.api.Dict()
         {
             "help_string": "spec",
         },
@@ -113,7 +113,7 @@ firstlevel_estimator_input_fields = [
     ),
     (
         "smoothing_type",
-        str,
+        str, #trait.api.Enum('iso', 'isoblurto')
         {
             "allowed_values": ["iso", "isoblurto"]
             "help_string": "Type of smoothing (iso or isoblurto)'"
@@ -133,56 +133,56 @@ firstlevel_estimator_input_spec = SpecInfo(
 estimator_output_spec = [
     (
         "effect_maps",
-        list, # List(File)
+        list, #trait.api.List(File)
         {
             "help_string": "effect maps",
         },
     ),
     (
         "variance_maps",
-        list, #List(File)
+        list, #trait.api.List(File)
         {
             "help_string": "variance maps",
         },
     ),
     (
         "stat_maps",
-        list, #List(File)
+        list, #trait.api.List(File)
         {
             "help_string": "stat maps",
         },
     ),
     (
         "zscore_maps",
-        list, #List(File)
+        list, #trait.api.List(File)
         {
             "help_string": "zscore maps",
         },
     ),
     (
         "pvalue_maps",
-        list, #List(File)
+        list, #trait.api.List(File)
         {
             "help_string": "pvalue maps",
         },
     ),
     (
         "contrast_metadata",
-        list, #List(Dict)
+        list, #trait.api.List(Dict)
         {
             "help_string": "contrast metadata",
         },
     ),
     (
         "model_maps",
-        list, #List(File)
+        list, #trait.api.List(File)
         {
             "help_string": "model maps",
         },
     ),
     (
         "model_metadata",
-        list, #List(Dict)
+        list, #trait.api.List(Dict)
         {
             "help_string": "model metadata",
         },
@@ -205,7 +205,7 @@ class FirstLevelEstimatorInterface(FunctionSpec):
 secondlevel_estimator_input_fields = [
     (
         "effect_maps",
-        list, #List(File)
+        list, #trait.api.List(File)
         {
             "help_string": "effect maps",
             "mandatory": True,
@@ -213,14 +213,14 @@ secondlevel_estimator_input_fields = [
     ),
     (
         "variance_maps",
-        list, #List(File)
+        list, #trait.api.List(File)
         {
             "help_string": "variance maps",
         },
     ),
     (
         "stat_metadata",
-        list, #List(List(Dict))
+        list, #trait.api.List(File)
         {
             "help_string": "stat metadata",
             "mandatory": True
@@ -228,7 +228,7 @@ secondlevel_estimator_input_fields = [
     ),
     (
         "spec",
-        dict
+        dict, #trait.api.Dict()
         {
             "help_string": "spec",
         },
@@ -242,7 +242,7 @@ secondlevel_estimator_input_fields = [
     ),
     (
         "smoothing_type",
-        str,
+        str, # trait.api.Enum('iso', 'isoblurto')
         {
             "allowed_values": ["iso", "isoblurto"]
             "help_string": "Type of smoothing (iso or isoblurto)'"
@@ -262,7 +262,7 @@ secondlevel_estimator_input_spec = SpecInfo(
 secondlevel_estimator_output_fields = [
     (
         "contrast_metadata",
-        list, #List(Dict)
+        list, #trait.api.List(Dict)
         {
             "help_string": "contrast metadata"
         }
