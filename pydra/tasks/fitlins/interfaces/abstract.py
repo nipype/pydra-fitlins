@@ -68,8 +68,8 @@ designmtx_output_spec = SpecInfo(
 
 
 class DesignMatrixInterface(FunctionSpec):
-    input_spec = DesignMatrixInputSpec
-    output_spec = DesignMatrixOutputSpec
+    input_spec = designmtx_input_spec
+    output_spec = designmtx_output_spec
     
     
 firstlevel_estimator_input_fields = [
@@ -197,8 +197,8 @@ estimator_output_spec = SpecInfo(
 
     
 class FirstLevelEstimatorInterface(FunctionSpec):
-    input_spec = FirstLevelEstimatorInputSpec
-    output_spec = EstimatorOutputSpec
+    input_spec = firstlevel_estimator_input_spec
+    output_spec = estimator_output_spec
 
 
 secondlevel_estimator_input_fields = [
@@ -277,5 +277,5 @@ secondlevel_estimator_output_spec = SpecInfo(
 
 
 class SecondLevelEstimatorInterface(FunctionSpec):
-    input_spec = SecondLevelEstimatorInputSpec
-    output_spec = SecondLevelEstimatorOutputSpec
+    input_spec = secondlevel_estimator_input_spec
+    output_spec = secondlevel_estimator_output_spec
