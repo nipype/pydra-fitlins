@@ -11,7 +11,7 @@ from pydra.engine.specs import File, SpecInfo, BaseSpec
 from pydra.engine.task import FunctionTask
 import typing as ty
 
-designmtx_input_fields = [
+DesignMatrix_input_fields = [
     (
         "bold_file",
         File,
@@ -43,14 +43,14 @@ designmtx_input_fields = [
     )
 ]
 
-designmtx_input_spec = SpecInfo(
+DesignMatrix_input_spec = SpecInfo(
     name="DesignMatrixInputSpec",
-    fields=designmtx_input_fields,
+    fields=DesignMatrix_input_fields,
     bases=(BaseSpec,),
 )
 
 
-designmtx_output_fields = [
+DesignMatrix_output_fields = [
     (
         "design_matrix",
         File,
@@ -60,19 +60,19 @@ designmtx_output_fields = [
     )
 ]
 
-designmtx_output_spec = SpecInfo(
+DesignMatrix_output_spec = SpecInfo(
     name="DesignMatrixOutputSpec",
-    fields=designmtx_output_fields,
+    fields=DesignMatrix_output_fields,
     bases=(BaseSpec,),
 )
 
 
 class DesignMatrixInterface(FunctionTask):
-    input_spec = designmtx_input_spec
-    output_spec = designmtx_output_spec
+    input_spec = DesignMatrix_input_spec
+    output_spec = DesignMatrix_output_spec
     
     
-firstlevel_estimator_input_fields = [
+FirstLevelEstimator_input_fields = [
     (
         "bold_file",
         File,
@@ -122,14 +122,14 @@ firstlevel_estimator_input_fields = [
 ]
 
 
-firstlevel_estimator_input_spec = SpecInfo(
+FirstLevelEstimator_input_spec = SpecInfo(
     name="FirstLevelEstimatorInputSpec",
-    fields=firstlevel_estimator_input_fields,
+    fields=FirstLevelEstimator_input_fields,
     bases=(BaseSpec,),
 )
 
     
-estimator_output_spec = [
+Estimator_output_spec = [
     (
         "effect_maps",
         list, #traits.List(File)
@@ -188,20 +188,20 @@ estimator_output_spec = [
     ),
 ]
 
-estimator_output_spec = SpecInfo(
+Estimator_output_spec = SpecInfo(
     name="EstimatorOutputSpec",
-    fields=estimator_output_spec,
+    fields=Estimator_output_spec,
     bases=(BaseSpec,),
 )
 
 
     
 class FirstLevelEstimatorInterface(FunctionTask):
-    input_spec = firstlevel_estimator_input_spec
-    output_spec = estimator_output_spec
+    input_spec = FirstLevelEstimator_input_spec
+    output_spec = Estimator_output_spec
 
 
-secondlevel_estimator_input_fields = [
+SecondLevelEstimator_input_fields = [
     (
         "effect_maps",
         list, #traits.List(File)
@@ -250,15 +250,15 @@ secondlevel_estimator_input_fields = [
     )
 ]
     
-secondlevel_estimator_input_spec = SpecInfo(
+SecondLevelEstimator_input_spec = SpecInfo(
     name="SecondLevelEstimatorInputSpec",
-    fields=secondlevel_estimator_input_fields,
+    fields=SecondLevelEstimator_input_fields,
     bases=(BaseSpec,),
 )
 
 
 
-secondlevel_estimator_output_fields = [
+SecondLevelEstimator_output_fields = [
     (
         "contrast_metadata",
         list, #traits.List(Dict)
@@ -268,13 +268,13 @@ secondlevel_estimator_output_fields = [
     )
 ]
     
-secondlevel_estimator_output_spec = SpecInfo(
+SecondLevelEstimator_output_spec = SpecInfo(
     name="SecondLevelEstimatoroutputSpec",
-    fields=secondlevel_estimator_output_fields,
+    fields=SecondLevelEstimator_output_fields,
     bases=(BaseSpec,),
 )
 
 
 class SecondLevelEstimatorInterface(FunctionTask):
-    input_spec = secondlevel_estimator_input_spec
-    output_spec = secondlevel_estimator_output_spec
+    input_spec = SecondLevelEstimator_input_spec
+    output_spec = SecondLevelEstimator_output_spec
