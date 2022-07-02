@@ -11,7 +11,7 @@ import numpy as np
 import pandas as pd
 
 from pydra.engine.specs import File, SpecInfo, BaseSpec, ShellSpec, ShellOutSpec
-from pydra.engine.task import FunctionTask, ShellCommandTask
+from pydra.engine.task import ShellCommandTask
 
 from nipype.interfaces.afni.base import Info
 from nipype.interfaces.base import isdefined, traits
