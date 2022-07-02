@@ -15,7 +15,7 @@ from nipype.utils.filemanip import fname_presuffix, split_filename
 
 from ..viz import plot_and_save, plot_corr_matrix, plot_contrast_matrix
 
-visualization_input_fields = [
+Visualization_input_fields = [
     (
         "data",
         File,
@@ -36,13 +36,13 @@ visualization_input_fields = [
 ]
 
 
-visualization_input_spec = SpecInfo(
+Visualization_input_spec = SpecInfo(
     name="VisualizationInputSpec",
-    fields=visualization_input_fields,
+    fields=Visualization_input_fields,
     bases=(BaseSpec,),
 )
 
-visualization_output_fields = [
+Visualization_output_fields = [
     (
         "figure",
         File,
@@ -53,15 +53,15 @@ visualization_output_fields = [
 ]
 
 
-visualization_output_spec = SpecInfo(
+Visualization_output_spec = SpecInfo(
     name="VisualizationOutputSpec",
-    fields=visualization_output_fields,
+    fields=Visualization_output_fields,
     bases=(BaseSpec,),
 )
 
 class Visualization(FunctionTask):
-    input_spec = visualization_input_spec
-    output_spec = visualization_output_spec
+    input_spec = Visualization_input_spec
+    output_spec = Visualization_output_spec
 
     def _run_interface(self, runtime):
         import matplotlib
@@ -103,7 +103,7 @@ class DesignPlot(Visualization):
 
 
         
-design_correlation_plot_input_fields = [
+DesignCorrelationPlot_input_fields = [
     (
         "contrast_info",
         list,
@@ -113,16 +113,15 @@ design_correlation_plot_input_fields = [
     )
 ]
 
-
-design_correlation_plot_input_spec = SpecInfo(
+DesignCorrelationPlot_input_spec = SpecInfo(
     name="DesignCorrelationPlotInputSpec",
-    fields=design_correlation_plot_input_fields,
+    fields=DesignCorrelationPlot_input_fields,
     bases=(BaseSpec,),
 )
 
 
 class DesignCorrelationPlot(Visualization):
-    input_spec = design_correlation_plot_input_spec
+    input_spec = DesignCorrelationPlot_input_spec
 
     def _visualize(self, data, out_name):
         columns = []
@@ -168,7 +167,7 @@ class DesignCorrelationPlot(Visualization):
 
 
 
-contrast_matrix_plot_input_fields = [
+ContrastMatrixPlot_input_fields = [
     (
         "contrast_info",
         list,
@@ -190,15 +189,15 @@ contrast_matrix_plot_input_fields = [
     ),
 ]
         
-contrast_matrix_plot_input_spec = SpecInfo(
+ContrastMatrixPlot_input_spec = SpecInfo(
     name="ContrastMatrixPlotInputSpec",
-    fields=contrast_matrix_plot_input_fields,
+    fields=ContrastMatrixPlot_input_fields,
     bases=(BaseSpec,),
 )
 
 
 class ContrastMatrixPlot(Visualization):
-    input_spec = contrast_matrix_plot_input_spec
+    input_spec = ContrastMatrixPlot_input_spec
 
     def _visualize(self, data, out_name):
         columns = []
@@ -235,7 +234,7 @@ class ContrastMatrixPlot(Visualization):
         )
 
 
-glass_brain_plot_input_fields = [
+GlassBrainPlot_input_fields = [
     (
         "threshold",
         float, #traits.Enum('auto', None, traits.Float(), usedefault=True)
@@ -262,15 +261,15 @@ glass_brain_plot_input_fields = [
 ]        
 
         
-glass_brain_plot_input_spec = SpecInfo(
+GlassBrainPlot_input_spec = SpecInfo(
     name="GlassBrainPlotInputSpec",
-    fields=glass_brain_plot_input_fields,
+    fields=GlassBrainPlot_input_fields,
     bases=(BaseSpec,),
 )
 
 
 class GlassBrainPlot(Visualization):
-    input_spec = glass_brain_plot_input_spec
+    input_spec = GlassBrainPlot_input_spec
 
     def _visualize(self, data, out_name):
         import numpy as np
