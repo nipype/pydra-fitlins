@@ -9,7 +9,6 @@ also be written.
 
 from pydra.engine.specs import File, SpecInfo, BaseSpec
 from pydra.engine.task import FunctionTask
-import typing as ty
 
 DesignMatrix_input_fields = [
     (

@@ -7,7 +7,6 @@ from nipype.interfaces.base import isdefined
 
 from pydra.engine.specs import File, SpecInfo, BaseSpec
 from pydra.engine.task import FunctionTask
-import typing as ty
 
 
 class MergeAll(IOBase):

@@ -62,11 +62,11 @@ class FirstLevelModel(FirstLevelModel):
         """
         import nibabel as nb
         import pandas as pd
-        from nipype import logging
+        import logging
         from pydra.tasks.nipype1.utils import Nipype1Task
         from nipype.interfaces import afni
 
-        logger = logging.getLogger("nipype.interface")
+        logger = logging.getLogger("pydra-fitlins.interface")
 
         spec = self.inputs.spec
         mat = pd.read_csv(self.inputs.design_matrix, delimiter="\t", index_col=0)

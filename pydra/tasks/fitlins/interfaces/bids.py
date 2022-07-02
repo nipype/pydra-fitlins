@@ -1,6 +1,7 @@
 import json
 import os
 import re
+import logging
 import shutil
 from gzip import GzipFile
 from itertools import chain
@@ -19,15 +20,13 @@ from pydra.engine.specs import (
 )
 from pydra.engine.task import FunctionTask
 
-
-from nipype import logging
 from nipype.interfaces.base import isdefined
 from nipype.interfaces.io import IOBase
 from nipype.utils.filemanip import copyfile
 
 from ..utils import snake_to_camel, to_alphanum
 
-iflogger = logging.getLogger('nipype.interface')
+iflogger = logging.getLogger('pydra-fitlins.interface')
 
 ENTITY_WHITELIST = {
     'task',
