@@ -1,5 +1,6 @@
 pydra
 pandas
+pybids
 numpy
 nibabel
 nilearn
