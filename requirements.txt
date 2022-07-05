@@ -5,6 +5,7 @@ numpy
 nibabel
 nilearn
 nipype
+niworkflows
 jinja2
 matplotlib
 seaborn
