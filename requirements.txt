@@ -1,4 +1,5 @@
 pydra
+pydra-nipype1
 pandas
 pybids
 numpy
