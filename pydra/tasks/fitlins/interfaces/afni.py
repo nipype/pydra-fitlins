@@ -214,7 +214,8 @@ class FirstLevelModel(FirstLevelModel):
         return runtime
 
     def save_remlfit_results(self, maps, contrasts, runtime):
-        """Parse  the AFNI "bucket" datasets written by 3dREMLfit and
+        """
+        Parse  the AFNI "bucket" datasets written by 3dREMLfit and
         subsequently read using nibabel. Save the results to disk according to
         fitlins expectation.
         Parameters
@@ -366,7 +367,8 @@ def extract_volume(imgs, idx, intent_name, fname):
 
 
 def get_afni_design_matrix(design, contrasts, stim_labels, t_r):
-    """Add appropriate metadata to the design matrix and write to file for
+    """
+    Add appropriate metadata to the design matrix and write to file for
     calling 3dREMLfit.  For a description of the target format see
     https://docs.google.com/document/d/1zpujpZYuleB7HuIFjb2vC4sYXG5M97hJ655ceAj4vE0/edit
     Parameters
@@ -564,21 +566,12 @@ Pval_output_spec = SpecInfo(
 
 
 class Pval(ShellCommandTask):
-    """Converts a dataset statistical sub-bricks to p-values, or optionally
+    """
+    Converts a dataset statistical sub-bricks to p-values, or optionally
     zscores. All output volumes will be converted to float format, bub-bricks
     that are not marked as statistical volumes are otherwise unchanged.
     For complete details, see the `3dPval Documentation.
     <https://afni.nimh.nih.gov/pub/dist/doc/program_help/3dPval.html>`_
-    Examples
-    ========
-    >>> from pydra.tasks.nipype1.utils import Nipype1Task
-    >>> from nipype.interfaces import afni
-    >>> pval = Nipype1Task(afni.Pval())
-    >>> pval.inputs.in_file = 'functional.nii'
-    >>> pval.inputs.out_file = 'output.nii'
-    >>> pval.cmdline
-    '3dPval -in_file functional.nii -prefix output.nii'
-    >>> res = pval()  # doctest: +SKIP
     """
 
     _cmd = "3dPval"
