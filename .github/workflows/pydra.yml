@@ -4,7 +4,7 @@
 # For deployment, it will be necessary to create a PyPI API token and store it as a secret
 # https://docs.github.com/en/actions/reference/encrypted-secrets
 
-name: Python package
+name: Pydra
 
 # Set once
 env:
@@ -43,7 +43,7 @@ jobs:
         python -c "import pydra as m; print(f'{m.__name__} {m.__version__} @ {m.__file__}')"
     - name: Install task package
       run: |
-        pip install ${{ matrix.pip-flags }} ".[dev]"
+        pip install ".[test]"
         python -c "import pydra.tasks.$SUBPACKAGE as m; print(f'{m.__name__} {m.__version__} @ {m.__file__}')"
         python -c "import pydra as m; print(f'{m.__name__} {m.__version__} @ {m.__file__}')"
 
@@ -67,14 +67,14 @@ jobs:
         pip install ".[test]"
         python -c "import pydra.tasks.$SUBPACKAGE as m; print(f'{m.__name__} {m.__version__} @ {m.__file__}')"
         python -c "import pydra as m; print(f'{m.__name__} {m.__version__} @ {m.__file__}')"
+        python -m pip install -r requirements.txt
     - name: Test with pytest
       run: |
         pytest -sv --doctest-modules pydra/tasks/$SUBPACKAGE \
             --cov pydra.tasks.$SUBPACKAGE --cov-report xml
     - uses: codecov/codecov-action@v1
       if: ${{ always() }}
-
-
+       
   deploy:
     needs: [devcheck, test]
     runs-on: ubuntu-latest
