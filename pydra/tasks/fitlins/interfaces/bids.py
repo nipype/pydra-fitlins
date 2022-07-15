@@ -18,11 +18,10 @@ from pydra.engine.specs import (
     MultiInputFile,
     MultiOutputFile,
 )
+from pydra.engine.helpers_file import copyfile
 from pydra.engine.task import FunctionTask
 
-from nipype.interfaces.base import isdefined
 from nipype.interfaces.io import IOBase
-from nipype.utils.filemanip import copyfile
 
 from ..utils import snake_to_camel, to_alphanum
 
@@ -158,7 +157,7 @@ class ModelSpecLoader(FunctionTask):
             database_path = self.inputs.database_path
             layout = bids.BIDSLayout.load(database_path=database_path)
 
-            if not isdefined(models):
+            if models in [None, attr.NOTHING]:
                 # model is not yet standardized, so validate=False
                 # Ignore all subject directories and .git/ and .datalad/ directories
                 indexer = bids.BIDSLayoutIndexer(
@@ -633,7 +632,7 @@ class BIDSDataSink(IOBase):
 
         layout = BIDSLayout(base_dir, validate=False)
         path_patterns = self.inputs.path_patterns
-        if not isdefined(path_patterns):
+        if path_patterns in [None, attr.NOTHING]:
             path_patterns = None
 
         out_files = []

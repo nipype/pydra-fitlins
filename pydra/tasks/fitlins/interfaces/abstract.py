@@ -9,6 +9,7 @@ also be written.
 
 from pydra.engine.specs import File, SpecInfo, BaseSpec
 from pydra.engine.task import FunctionTask
+import typing as ty
 
 DesignMatrix_input_fields = [
     (
@@ -21,7 +22,7 @@ DesignMatrix_input_fields = [
     ),
     (
         "design_info",
-        dict, #traits.Dict()
+        dict, 
         {
             "help_string": "design info",
         },
@@ -35,7 +36,7 @@ DesignMatrix_input_fields = [
     ),
     (
         "drift_model",
-        str, #traits.Either(trait.api.String(), None)
+        ty.Union(str, None)
         {
             "help_string": "Optional drift model to apply to design matrix"
         }
@@ -82,7 +83,7 @@ FirstLevelEstimator_input_fields = [
     ),
     (
         "mask_file",
-        File,
+        ty.Union(File, None),
         {
             "help_string": "mask file",
         },
@@ -97,7 +98,7 @@ FirstLevelEstimator_input_fields = [
     ),
     (
         "spec",
-        dict, #traits.Dict()
+        dict, 
         {
             "help_string": "spec",
         },
@@ -111,9 +112,8 @@ FirstLevelEstimator_input_fields = [
     ),
     (
         "smoothing_type",
-        str, #traits.Enum('iso', 'isoblurto')
+        ty.Literal("iso", "isoblurto"), 
         {
-            "allowed_values": ["iso", "isoblurto"],
             "help_string": "Type of smoothing (iso or isoblurto)'",
         }
         
@@ -131,56 +131,56 @@ FirstLevelEstimator_input_spec = SpecInfo(
 Estimator_output_spec = [
     (
         "effect_maps",
-        list, #traits.List(File)
+        list(File), 
         {
             "help_string": "effect maps",
         },
     ),
     (
         "variance_maps",
-        list, #traits.List(File)
+        list(File), 
         {
             "help_string": "variance maps",
         },
     ),
     (
         "stat_maps",
-        list, #traits.List(File)
+        list(File), 
         {
             "help_string": "stat maps",
         },
     ),
     (
         "zscore_maps",
-        list, #traits.List(File)
+        list(File), 
         {
             "help_string": "zscore maps",
         },
     ),
     (
         "pvalue_maps",
-        list, #traits.List(File)
+        list(File), 
         {
             "help_string": "pvalue maps",
         },
     ),
     (
         "contrast_metadata",
-        list, #traits.List(Dict)
+        list(dict), 
         {
             "help_string": "contrast metadata",
         },
     ),
     (
         "model_maps",
-        list, #traits.List(File)
+        list(File), 
         {
             "help_string": "model maps",
         },
     ),
     (
         "model_metadata",
-        list, #traits.List(Dict)
+        list(dict), 
         {
             "help_string": "model metadata",
         },
@@ -203,7 +203,7 @@ class FirstLevelEstimatorInterface(FunctionTask):
 SecondLevelEstimator_input_fields = [
     (
         "effect_maps",
-        list, #traits.List(File)
+        list(list(File)),
         {
             "help_string": "effect maps",
             "mandatory": True,
@@ -211,14 +211,14 @@ SecondLevelEstimator_input_fields = [
     ),
     (
         "variance_maps",
-        list, #traits.List(File)
+        list(list(File)), 
         {
             "help_string": "variance maps",
         },
     ),
     (
         "stat_metadata",
-        list, #traits.List(File)
+        list(list(dict)), 
         {
             "help_string": "stat metadata",
             "mandatory": True
@@ -226,7 +226,7 @@ SecondLevelEstimator_input_fields = [
     ),
     (
         "spec",
-        dict, #traits.Dict()
+        dict, 
         {
             "help_string": "spec",
         },
@@ -240,9 +240,8 @@ SecondLevelEstimator_input_fields = [
     ),
     (
         "smoothing_type",
-        str, # traits.Enum('iso', 'isoblurto')
+        ty.Literal("iso", "isoblurto"), 
         {
-            "allowed_values": ["iso", "isoblurto"],
             "help_string": "Type of smoothing (iso or isoblurto)'",
         }
         
@@ -260,7 +259,7 @@ SecondLevelEstimator_input_spec = SpecInfo(
 SecondLevelEstimator_output_fields = [
     (
         "contrast_metadata",
-        list, #traits.List(Dict)
+        list(dict), 
         {
             "help_string": "contrast metadata"
         }
@@ -268,7 +267,7 @@ SecondLevelEstimator_output_fields = [
 ]
     
 SecondLevelEstimator_output_spec = SpecInfo(
-    name="SecondLevelEstimatoroutputSpec",
+    name="SecondLevelEstimatorOutputSpec",
     fields=SecondLevelEstimator_output_fields,
     bases=(BaseSpec,),
 )

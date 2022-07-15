@@ -1,10 +1,10 @@
-import os
+import os, attr
 import numpy as np
 import pandas as pd
 from functools import partial
 
-# LibraryBaseInterface, isdefined, need to be added to pydra
-from nipype.interfaces.base import LibraryBaseInterface, isdefined
+# LibraryBaseInterface, need to be added to pydra
+from nipype.interfaces.base import LibraryBaseInterface
 from pydra.engine.task import FunctionTask
 
 from .abstract import (
@@ -12,7 +12,6 @@ from .abstract import (
     FirstLevelEstimatorInterface,
     SecondLevelEstimatorInterface,
 )
-
 
 class NilearnBaseInterface(LibraryBaseInterface):
     _pkg = 'nilearn.glm'
@@ -26,7 +25,7 @@ def prepare_contrasts(contrasts, all_regressors):
           'ContrastInfo', ('name', 'conditions', 'weights', 'test', 'entities')
       )
     """
-    if not isdefined(contrasts):
+    if contrasts in [None, attr.NOTHING]:
         return []
 
     out_contrasts = []
@@ -190,13 +189,13 @@ class FirstLevelModel(NilearnBaseInterface, FirstLevelEstimatorInterface, Functi
                 img.dataobj._inter = inter32
 
         mask_file = self.inputs.mask_file
-        if not isdefined(mask_file):
+        if mask_file in [None, attr.NOTHING]:
             mask_file = None
         smoothing_fwhm = self.inputs.smoothing_fwhm
-        if not isdefined(smoothing_fwhm):
+        if smoothing_fwhm in [None, attr.NOTHING]:
             smoothing_fwhm = None
         smoothing_type = self.inputs.smoothing_type
-        if isdefined(smoothing_type) and smoothing_type != 'iso':
+        if smoothing_type not in [None, attr.NOTHING] and smoothing_type != 'iso':
             raise NotImplementedError(
                 "Only the iso smoothing type is available for the nilearn estimator."
             )
@@ -320,9 +319,9 @@ class SecondLevelModel(NilearnBaseInterface, SecondLevelEstimatorInterface, Func
         spec = self.inputs.spec
         smoothing_fwhm = self.inputs.smoothing_fwhm
         smoothing_type = self.inputs.smoothing_type
-        if not isdefined(smoothing_fwhm):
+        if smoothing_fwhm in [None, attr.NOTHING]:
             smoothing_fwhm = None
-        if isdefined(smoothing_type) and smoothing_type != 'iso':
+        if smoothing_type not in [None, attr.NOTHING] and smoothing_type != 'iso':
             raise NotImplementedError(
                 "Only the iso smoothing type is available for the nilearn estimator."
             )

@@ -1,17 +1,14 @@
 from pkg_resources import resource_filename
+import typing as ty
 import numpy as np
 import pandas as pd
 import nibabel as nb
 from nilearn import plotting as nlp
 from collections import namedtuple
 
+from pydra.engine.helpers_file import fname_presuffix, split_filename
 from pydra.engine.specs import File, SpecInfo, BaseSpec
 from pydra.engine.task import FunctionTask
-import typing as ty
-
-#need to convert the following two to pydra
-from nipype.interfaces.base import isdefined
-from nipype.utils.filemanip import fname_presuffix, split_filename
 
 from ..viz import plot_and_save, plot_corr_matrix, plot_contrast_matrix
 
@@ -26,9 +23,8 @@ Visualization_input_fields = [
     ),
     (
         "image_type",
-        str, #traits.Enum('svg', 'png')
+        ty.Literal("svg", "png")
         {
-            "allowed_values": ["svg", "png"],
             "help_string": "image type",
             "mandatory": True,
         }
@@ -275,7 +271,7 @@ class GlassBrainPlot(Visualization):
         import numpy as np
 
         vmax = self.inputs.vmax
-        if not isdefined(vmax):
+        if vmax in [None, attr.NOTHING]:
             vmax = None
             abs_data = np.abs(data.get_fdata(dtype=np.float32))
             pctile99 = np.percentile(abs_data, 99.99)

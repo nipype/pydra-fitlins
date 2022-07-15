@@ -1,14 +1,8 @@
-"""
-Utilities to handle BIDS inputs
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-ADD EXAMPLES
-"""
 import os
 import json
 import warnings
 import copy
 from itertools import chain
-
 
 class BIDSError(ValueError):
     def __init__(self, message, bids_root):
@@ -48,16 +42,16 @@ def collect_participants(layout, participant_label=None, strict=False):
     designated with the participant_label argument exist in that folder.
     Returns the list of participants to be finally processed.
     Requesting all subjects in a BIDS directory root:
-    >>> collect_participants(layout)
+    >>> collect_participants(layout) # doctest: +SKIP
     ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10']
     Requesting two subjects, given their IDs:
-    >>> collect_participants(layout, participant_label=['02', '04'])
+    >>> collect_participants(layout, participant_label=['02', '04']) # doctest: +SKIP
     ['02', '04']
     Requesting two subjects, given their IDs (works with 'sub-' prefixes):
-    >>> collect_participants(layout, participant_label=['sub-02', 'sub-04'])
+    >>> collect_participants(layout, participant_label=['sub-02', 'sub-04']) # doctest: +SKIP
     ['02', '04']
     Requesting two subjects, but one does not exist:
-    >>> collect_participants(layout, participant_label=['02', '14'])
+    >>> collect_participants(layout, participant_label=['02', '14']) # doctest: +SKIP
     ['02']
     >>> collect_participants(layout, participant_label=['02', '14'],
     ...                      strict=True)  # doctest: +IGNORE_EXCEPTION_DETAIL
@@ -106,7 +100,7 @@ def collect_participants(layout, participant_label=None, strict=False):
 
 
 def write_derivative_description(bids_dir, deriv_dir, args):
-    from fitlins import __version__
+    from .. import __version__
     from pathlib import Path
 
     def _clean_relative(item):

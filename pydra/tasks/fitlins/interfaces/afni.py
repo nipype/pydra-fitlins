@@ -10,12 +10,11 @@ import nibabel as nb
 import numpy as np
 import pandas as pd
 
+from pydra.engine.helpers_file import fname_presuffix
 from pydra.engine.specs import File, SpecInfo, BaseSpec, ShellSpec, ShellOutSpec
 from pydra.engine.task import ShellCommandTask
 
 from nipype.interfaces.afni.base import Info
-from nipype.interfaces.base import isdefined, traits
-from nipype.utils.filemanip import fname_presuffix
 
 from .nilearn import FirstLevelModel, _flatten, prepare_contrasts
 
@@ -586,7 +585,7 @@ class Pval(ShellCommandTask):
     def _list_outputs(self):
         outputs = self.output_spec().get()
 
-        if not isdefined(self.inputs.out_file):
+        if self.inputs.out_file in [None, attr.NOTHING]:
             prefix = self._gen_fname(self.inputs.in_file, suffix="_pval")
             outputtype = self.inputs.outputtype
             if outputtype == "AFNI":

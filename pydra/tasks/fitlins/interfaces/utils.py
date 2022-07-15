@@ -1,10 +1,7 @@
 """
 TODO: need IOBase, DynamicTraitedSpec, add_traits, 
-isdefined in pydra
 """
 from nipype.interfaces.io import IOBase, add_traits
-from nipype.interfaces.base import isdefined
-
 from pydra.engine.specs import File, SpecInfo, BaseSpec
 from pydra.engine.task import FunctionTask
 
@@ -39,7 +36,7 @@ class MergeAll(IOBase):
         for key in self._fields:
             val = getattr(self.inputs, key)
             # Allow for empty inputs
-            if isdefined(val):
+            if val not in [None, attr.NOTHING]:
                 if self._check_lengths is True:
                     self._calculate_length(val)
                 outputs[key] = [elem for sublist in val for elem in sublist]
@@ -119,7 +116,7 @@ class CollateWithMetadata(FunctionTask):
         for key in self._fields:
             val = getattr(self.inputs, key)
             # Allow for missing values
-            if isdefined(val):
+            if val not in [None, attr.NOTHING]:
                 if len(val) != n:
                     raise ValueError(f"List lengths must match metadata. Failing list: {key}")
                 for md, obj in zip(orig_metadata, val):
