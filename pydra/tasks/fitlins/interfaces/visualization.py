@@ -1,5 +1,11 @@
 from pkg_resources import resource_filename
-import typing as ty
+try:
+    from typing import Literal  # raises a mypy error for <3.8, doesn't for >=3.8
+except ImportError:
+    try:
+        from typing_extensions import Literal
+    except ImportError:
+        Literal = None
 import numpy as np
 import pandas as pd
 import nibabel as nb
@@ -23,7 +29,7 @@ Visualization_input_fields = [
     ),
     (
         "image_type",
-        ty.Literal("svg", "png")
+        Literal["svg", "png"],
         {
             "help_string": "image type",
             "mandatory": True,

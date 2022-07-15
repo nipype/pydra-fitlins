@@ -7,9 +7,16 @@ subclass can be written and swapped in without demanding that an estimator
 also be written.
 """
 
-from pydra.engine.specs import File, SpecInfo, BaseSpec
+from pydra.engine.specs import File, MultiOutputFile, SpecInfo, BaseSpec
 from pydra.engine.task import FunctionTask
-import typing as ty
+from typing import Union
+try:
+    from typing import Literal  # raises a mypy error for <3.8, doesn't for >=3.8
+except ImportError:
+    try:
+        from typing_extensions import Literal
+    except ImportError:
+        Literal = None
 
 DesignMatrix_input_fields = [
     (
@@ -36,7 +43,7 @@ DesignMatrix_input_fields = [
     ),
     (
         "drift_model",
-        ty.Union(str, None)
+        Union[str, None],
         {
             "help_string": "Optional drift model to apply to design matrix"
         }
@@ -83,7 +90,7 @@ FirstLevelEstimator_input_fields = [
     ),
     (
         "mask_file",
-        ty.Union(File, None),
+        Union[File, None],
         {
             "help_string": "mask file",
         },
@@ -112,7 +119,7 @@ FirstLevelEstimator_input_fields = [
     ),
     (
         "smoothing_type",
-        ty.Literal("iso", "isoblurto"), 
+        Literal["iso", "isoblurto"], 
         {
             "help_string": "Type of smoothing (iso or isoblurto)'",
         }
@@ -131,56 +138,56 @@ FirstLevelEstimator_input_spec = SpecInfo(
 Estimator_output_spec = [
     (
         "effect_maps",
-        list(File), 
+        MultiOutputFile, 
         {
             "help_string": "effect maps",
         },
     ),
     (
         "variance_maps",
-        list(File), 
+        MultiOutputFile, 
         {
             "help_string": "variance maps",
         },
     ),
     (
         "stat_maps",
-        list(File), 
+        MultiOutputFile, 
         {
             "help_string": "stat maps",
         },
     ),
     (
         "zscore_maps",
-        list(File), 
+        MultiOutputFile, 
         {
             "help_string": "zscore maps",
         },
     ),
     (
         "pvalue_maps",
-        list(File), 
+        MultiOutputFile, 
         {
             "help_string": "pvalue maps",
         },
     ),
     (
         "contrast_metadata",
-        list(dict), 
+        list[dict], 
         {
             "help_string": "contrast metadata",
         },
     ),
     (
         "model_maps",
-        list(File), 
+        MultiOutputFile, 
         {
             "help_string": "model maps",
         },
     ),
     (
         "model_metadata",
-        list(dict), 
+        list[dict], 
         {
             "help_string": "model metadata",
         },
