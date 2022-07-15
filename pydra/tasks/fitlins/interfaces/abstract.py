@@ -7,7 +7,7 @@ subclass can be written and swapped in without demanding that an estimator
 also be written.
 """
 
-from pydra.engine.specs import File, MultiOutputFile, SpecInfo, BaseSpec
+from pydra.engine.specs import File, MultiInputFile, MultiOutputFile, SpecInfo, BaseSpec
 from pydra.engine.task import FunctionTask
 from typing import Union
 try:
@@ -210,7 +210,7 @@ class FirstLevelEstimatorInterface(FunctionTask):
 SecondLevelEstimator_input_fields = [
     (
         "effect_maps",
-        list(list(File)),
+        MultiInputFile,
         {
             "help_string": "effect maps",
             "mandatory": True,
@@ -218,14 +218,14 @@ SecondLevelEstimator_input_fields = [
     ),
     (
         "variance_maps",
-        list(list(File)), 
+        MultiInputFile, 
         {
             "help_string": "variance maps",
         },
     ),
     (
         "stat_metadata",
-        list(list(dict)), 
+        list[list[dict]], 
         {
             "help_string": "stat metadata",
             "mandatory": True
@@ -247,7 +247,7 @@ SecondLevelEstimator_input_fields = [
     ),
     (
         "smoothing_type",
-        ty.Literal("iso", "isoblurto"), 
+        Literal["iso", "isoblurto"], 
         {
             "help_string": "Type of smoothing (iso or isoblurto)'",
         }
@@ -266,7 +266,7 @@ SecondLevelEstimator_input_spec = SpecInfo(
 SecondLevelEstimator_output_fields = [
     (
         "contrast_metadata",
-        list(dict), 
+        list[dict], 
         {
             "help_string": "contrast metadata"
         }
