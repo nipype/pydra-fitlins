@@ -1,0 +1,12 @@
+pydra
+pydra-nipype1
+pandas
+pybids
+numpy
+nibabel
+nilearn
+nipype
+niworkflows
+jinja2
+matplotlib
+seaborn
