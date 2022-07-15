@@ -42,22 +42,7 @@ def collect_participants(layout, participant_label=None, strict=False):
     designated with the participant_label argument exist in that folder.
     Returns the list of participants to be finally processed.
     Requesting all subjects in a BIDS directory root:
-    >>> collect_participants(layout) # doctest: +SKIP
-    ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10']
-    Requesting two subjects, given their IDs:
-    >>> collect_participants(layout, participant_label=['02', '04']) # doctest: +SKIP
-    ['02', '04']
-    Requesting two subjects, given their IDs (works with 'sub-' prefixes):
-    >>> collect_participants(layout, participant_label=['sub-02', 'sub-04']) # doctest: +SKIP
-    ['02', '04']
-    Requesting two subjects, but one does not exist:
-    >>> collect_participants(layout, participant_label=['02', '14']) # doctest: +SKIP
-    ['02']
-    >>> collect_participants(layout, participant_label=['02', '14'],
-    ...                      strict=True)  # doctest: +IGNORE_EXCEPTION_DETAIL
-    Traceback (most recent call last):
-    fmriprep.utils.bids.BIDSError:
-    ...
+    TODO: ADD DOCTEST
     """
     all_participants = sorted(layout.get_subjects())
 
